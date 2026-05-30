@@ -7,34 +7,34 @@ export default function App() {
   const [ecgData, setEcgData] = useState([]);
 
   useEffect(() => {
-    // 1. Explicitly determine if we are running in development or live production
-    const isProduction = window.location.hostname !== 'localhost' && window.location.hostname !== '127.0.0.1';
-    
-    // 2. Force the absolute path structural subfolder if live on github
-    const dataPath = isProduction 
-      ? '/3d-ekg/ecg_data.json' 
-      : '/ecg_data.json';
+  // 1. Explicitly determine if we are running in development or live production
+  const isProduction = window.location.hostname !== 'localhost' && window.location.hostname !== '127.0.0.1';
+  
+  // 2. Force the absolute path structural subfolder if live on github
+  const dataPath = isProduction 
+    ? '/3d-ekg/ecg_data.json' 
+    : '/ecg_data.json';
 
-    console.log("Streaming telemetry matrix path channel routed to:", dataPath);
+  console.log("Streaming telemetry matrix path channel routed to:", dataPath);
 
-    fetch(dataPath)
-      .then(response => {
-        if (!response.ok) {
-          throw new Error(`Server returned HTTP status protocol: ${response.status}`);
-        }
-        return response.json();
-      })
-      .then(data => {
-        setEcgData(data);
-        // Fallback timeline index configuration tracking
-        if (typeof setTimelineStep === 'function') {
-          setTimelineStep(Math.floor(data.length / 4));
-        }
-      })
-      .catch(err => {
-        console.error("Error streaming local JSON data channel:", err);
-      });
-  }, []);
+  fetch(dataPath)
+    .then(response => {
+      if (!response.ok) {
+        throw new Error(`Server returned HTTP status protocol: ${response.status}`);
+      }
+      return response.json();
+    })
+    .then(data => {
+      setEcgData(data);
+      if (typeof setTimelineStep === 'function') {
+        setTimelineStep(Math.floor(data.length / 4));
+      }
+    })
+    .catch(err => {
+      console.error("Error streaming local JSON data channel:", err);
+    });
+}, []);
+
 
   return (
     <div className="min-h-screen w-full flex items-center justify-center bg-white p-6">
