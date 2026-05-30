@@ -1,0 +1,27 @@
+@import "tailwindcss";
+
+@theme {
+  --color-slate-50: #f8fafc;
+  --color-slate-100: #f1f5f9;
+  --color-slate-200: #e2e8f0;
+  --color-slate-400: #94a3b8;
+  --color-slate-500: #64748b;
+  --color-slate-700: #334155;
+  --color-slate-800: #1e293b;
+}
+
+/* Custom class declaration to force multi-layered diffuse rainbow gradient box casting */
+.presentation-halo {
+  box-shadow: 
+    -30px -30px 80px rgba(255, 75, 75, 0.15),    /* Neon Red (Top Left) */
+    -30px 30px 80px rgba(0, 242, 254, 0.18),     /* Vibrant Cyan (Bottom Left) */
+    30px 30px 80px rgba(0, 230, 118, 0.12),      /* Vivid Green (Bottom Right) */
+    30px -30px 80px rgba(255, 165, 0, 0.15);     /* Bright Orange (Top Right) */
+}
+
+body {
+  background-color: #FFFFFF;
+  margin: 0;
+  padding: 0;
+  font-family: system-ui, -apple-system, sans-serif;
+}
