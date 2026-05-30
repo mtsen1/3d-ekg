@@ -7,12 +7,18 @@ export default function App() {
   const [ecgData, setEcgData] = useState([]);
 
   // Stream local structural JSON coordinates on load
+  // --- REPLACE YOUR CURRENT FETCH WITH THIS ---
   useEffect(() => {
-    fetch('/ecg_data.json')
-      .then(response => response.json())
+    fetch(`${import.meta.env.BASE_URL}ecg_data.json`)
+      .then(response => {
+        if (!response.ok) {
+          throw new Error(`Network response was not ok: ${response.status}`);
+        }
+        return response.json();
+      })
       .then(data => {
         setEcgData(data);
-        setTimelineStep(Math.floor(data.length / 4)); // Initialize starter point
+        setTimelineStep(Math.floor(data.length / 4));
       })
       .catch(err => console.error("Error streaming local JSON data channel:", err));
   }, []);
