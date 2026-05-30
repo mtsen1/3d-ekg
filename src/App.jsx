@@ -6,15 +6,34 @@ export default function App() {
   const [timelineStep, setTimelineStep] = useState(0);
   const [ecgData, setEcgData] = useState([]);
 
-  // Stream local structural JSON coordinates on load
   useEffect(() => {
-    fetch('/ecg_data.json')
-      .then(response => response.json())
+    // 1. Explicitly determine if we are running in development or live production
+    const isProduction = window.location.hostname !== 'localhost' && window.location.hostname !== '127.0.0.1';
+    
+    // 2. Force the absolute path structural subfolder if live on github
+    const dataPath = isProduction 
+      ? '/3d-ekg/ecg_data.json' 
+      : '/ecg_data.json';
+
+    console.log("Streaming telemetry matrix path channel routed to:", dataPath);
+
+    fetch(dataPath)
+      .then(response => {
+        if (!response.ok) {
+          throw new Error(`Server returned HTTP status protocol: ${response.status}`);
+        }
+        return response.json();
+      })
       .then(data => {
         setEcgData(data);
-        setTimelineStep(Math.floor(data.length / 4)); // Initialize starter point
+        // Fallback timeline index configuration tracking
+        if (typeof setTimelineStep === 'function') {
+          setTimelineStep(Math.floor(data.length / 4));
+        }
       })
-      .catch(err => console.error("Error streaming local JSON data channel:", err));
+      .catch(err => {
+        console.error("Error streaming local JSON data channel:", err);
+      });
   }, []);
 
   return (
