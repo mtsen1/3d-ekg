@@ -4,3 +4,7 @@ An interactive, web visualization application designed to transform linear time-
 **Live Interactive Dashboard:** [https://mtsen1.github.io/3d-ekg/](https://mtsen1.github.io/3d-ekg/)
 
 
+## Reference
+Dataset: [PTB Diagnostic ECG Database](https://www.kaggle.com/datasets/abhirampolisetti/ptb-diagnostic-ecg-database)
+
+Goldberger, A., Amaral, L., Glass, L., Hausdorff, J., Ivanov, P. C., Mark, R., … & Stanley, H. E. (2000). PhysioBank, PhysioToolkit, and PhysioNet: Components of a new research resource for complex physiologic signals. Circulation [Online]. 101 (23), pp. e215–e220
